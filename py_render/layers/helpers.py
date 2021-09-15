@@ -42,3 +42,16 @@ class Resize(Layer):
     
     def apply(self, im: Image.Image) -> Image.Image:
         return im.resize(self.size, resample=self._resample_method)
+
+
+class Flip(Layer):
+    HORIZONTAL = Image.FLIP_TOP_BOTTOM
+    VERTICAL = Image.FLIP_LEFT_RIGHT
+    def __init__(self, mode):
+        super().__init__("Flip", "Flips an Image based on given orientation")
+        self._mode = mode
+        if mode not in (Flip.HORIZONTAL, Flip.VERTICAL):
+            raise ValueError("Mode must be one of the 'Flip.VERTICAL' or 'Flip.HORIZONTAL'")
+    
+    def apply(self, im: Image.Image) -> Image.Image:
+        return im.transpose(self._mode)
