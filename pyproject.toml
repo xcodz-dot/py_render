@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "py_render"
+version = "1.0.0b1"
+description = "Image Rendering Library. Makes other image libraries easier."
+authors = ["xcodz-dot <71920621+xcodz-dot@users.noreply.github.com>"]
+license = "MIT License"
+readme = "README.md"
+homepage = "https://github.com/xcodz-dot/py_render"
+repository = "https://github.com/xcodz-dot/py_render"
+keywords = ["Pillow", "render", "rendering", "wrapper"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+Pillow = "^8.3.2"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
