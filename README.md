@@ -14,4 +14,10 @@ These are groups of Layers that are executed on an input image to produce output
 
 ### Sources
 
-Sources are nothing but `PIL.Image.Image` They can be loaded using helper functions provided by this library or yourself by using the `PIL.Image` directly.
+Sources are objects that can be in the following forms:
+* `PIL.Image.Image`
+* `py_render.sources.Source`
+* `[PIL.Image.Image, Union[Workflow, Source, Layer]]`
+
+they are taken as input by most of the workflows and layers.
+They can be evaluated using `py_render.sources.evaluate`
