@@ -55,3 +55,17 @@ class Flip(Layer):
     
     def apply(self, im: Image.Image) -> Image.Image:
         return im.transpose(self._mode)
+
+
+class Convert(Layer):
+    PALETTE_WEB = Image.WEB
+    PALETTE_ADAPTIVE = Image.ADAPTIVE
+    def __init__(self, mode: str = None, matrix: Tuple[int] = None, palette=0, colors: int = 256):
+        super().__init__("Convert", "Convert an image to a specific format or type.")
+        self._mode = mode
+        self._matrix = matrix
+        self._palette = palette
+        self._colors = colors
+    
+    def apply(self, im: Image.Image) -> Image.Image:
+        return im.convert(self._mode, self._matrix, palette = self._palette, colors = self._colors)
