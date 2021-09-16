@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Union
 from .base_layer import Layer
 from PIL import Image
 
@@ -11,6 +11,7 @@ class AreaFilter(Layer):
         self._filter = filter
 
     def apply(self, im: Image.Image) -> Image.Image:
+        im = super().apply(im)
         frame = im.crop(self._area)
         frame = self._filter.apply(frame)
         im2 = im.copy() 
@@ -24,6 +25,7 @@ class Crop(Layer):
         self._area = (area[0], area[1], area[0]+area[2], area[1]+area[3])
     
     def apply(self, im: Image.Image) -> Image.Image:
+        im = super().apply(im)
         return im.crop(self._area)
 
 
@@ -41,7 +43,8 @@ class Resize(Layer):
         self._resample_method = resample_method
     
     def apply(self, im: Image.Image) -> Image.Image:
-        return im.resize(self.size, resample=self._resample_method)
+        im = super().apply(im)
+        return im.resize(self._size, resample=self._resample_method)
 
 
 class Flip(Layer):
@@ -54,6 +57,7 @@ class Flip(Layer):
             raise ValueError("Mode must be one of the 'Flip.VERTICAL' or 'Flip.HORIZONTAL'")
     
     def apply(self, im: Image.Image) -> Image.Image:
+        im = super().apply(im)
         return im.transpose(self._mode)
 
 
@@ -68,4 +72,14 @@ class Convert(Layer):
         self._colors = colors
     
     def apply(self, im: Image.Image) -> Image.Image:
+        im = super().apply(im)
         return im.convert(self._mode, self._matrix, palette = self._palette, colors = self._colors)
+
+# class Composite(Layer):
+#     def __init__(self, area: Union[Tuple[int, int, int, int], Tuple[int, int]], image: Image.Image):
+#         super().__init__("Composite", "Paste a given image to the provided image at certain area")
+#         self._area = (area[0], area[1], area[0]+area[2], area[1]+area[3])
+
+#     def apply(self, im: Image.Image) -> Image.Image:
+#         im = super().apply(im)
+# TODO: I am in the progress of completing this   

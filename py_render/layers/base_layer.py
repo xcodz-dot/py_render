@@ -1,3 +1,4 @@
+from .. import sources
 from PIL import Image
 
 class Layer:
@@ -6,4 +7,4 @@ class Layer:
         self.description = description
     
     def apply(self, im: Image.Image) -> Image.Image:
-        return im
+        return sources.evaluate(im)

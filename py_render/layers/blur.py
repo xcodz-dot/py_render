@@ -10,6 +10,7 @@ class Blur(Layer):
         self._filter = ImageFilter.GaussianBlur(blur)
 
     def apply(self, im: Image.Image) -> Image.Image:
+        im = super().apply(im)
         return im.filter(self._filter)
 
 
@@ -19,4 +20,5 @@ class BoxBlur(Layer):
         self._filter = ImageFilter.BoxBlur(blur)
     
     def apply(self, im: Image.Image) -> Image.Image:
+        im = super().apply(im)
         return im.filter(self._filter)
