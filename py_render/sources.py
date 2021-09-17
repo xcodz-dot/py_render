@@ -23,14 +23,19 @@ class VariableSourceController:
     def __getitem__(self, k):
         return self.variables[k].get()
     
+    def add(self, label, var):
+        self.variables[label] = var
+    
     def __delitem__(self, k):
         del self.variables[k]
 
 
 class VariableSource(Source):
-    def __init__(self, init: Image = None, controller: VariableSourceController = None):
+    def __init__(self, init: Image = None, controller: VariableSourceController = None, label: str = None):
         self.value = init
         self.controller = controller
+        if label is not None:
+            self.controller.add(label, self)
 
     def get(self):
         return self.value
@@ -40,12 +45,15 @@ class VariableSource(Source):
 
 
 def evaluate(im: Image) -> Image:
+    oim = im
     if isinstance(im, (tuple, list)):
         if len(im) > 1:
             if isinstance(im[1], workflows.Workflow):
                 im = im[1].apply(im[0])
-            elif isinstance(im[1], Source):
-                im = im[1].get()
             elif isinstance(im[1], base_layer.Layer):
                 im = im[1].apply(im[0])
+        
+    elif isinstance(im, Source):
+        im = im.get()
+    
     return im
