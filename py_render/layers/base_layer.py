@@ -2,9 +2,11 @@ from .. import sources
 from PIL import Image
 
 class Layer:
-    def __init__(self, name: str, description: str = ""):
-        self.name = name
-        self.description = description
+    author = "unknown"
+    version = "unknown"
+    description = "unknown"
+    def __init__(self):
+        pass
     
     def apply(self, im: Image.Image) -> Image.Image:
         return sources.evaluate(im)
