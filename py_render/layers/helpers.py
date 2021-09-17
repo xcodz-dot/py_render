@@ -93,14 +93,17 @@ class Convert(Layer):
         im = super().apply(im)
         return im.convert(self._mode, self._matrix, palette = self._palette, colors = self._colors)
 
-# class Composite(Layer):
-#     author = "xcodz-dot"
-#     version = "1.0.0a0"
-#     description = "Paste a given image to the provided image at certain area"
-#     def __init__(self, area: Union[Tuple[int, int, int, int], Tuple[int, int]], image: Image.Image):
-#         super().__init__()
-#         self._area = (area[0], area[1], area[0]+area[2], area[1]+area[3])
+class Composite(Layer):
+    author = "xcodz-dot"
+    version = "1.0.0"
+    description = "Paste a given image to the provided image at certain area"
+    def __init__(self, area: Union[Tuple[int, int, int, int], Tuple[int, int]], image: Image.Image):
+        super().__init__()
+        self._area = (area[0], area[1], area[0]+area[2], area[1]+area[3])
+        self._image = image
 
-#     def apply(self, im: Image.Image) -> Image.Image:
-#         im = super().apply(im)
-# TODO: I am in the progress of completing this   
+    def apply(self, im: Image.Image) -> Image.Image:
+        im = super().apply(im).copy()
+        im2 = super().apply(self._image)
+        im.paste(im2, self._area)
+        return im
