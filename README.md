@@ -2,6 +2,8 @@
 
 A Simple library to make your photos better.
 
+**Note**: Documentation has not been implemented completely yet. Please wait until first major release.
+
 ## Concepts
 
 ### Layers
