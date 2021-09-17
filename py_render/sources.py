@@ -13,10 +13,24 @@ class Source:
         pass
 
 
+class VariableSourceController:
+    def __init__(self, **variables):
+        self.variables = variables
+    
+    def __setitem__(self, k, v):
+        self.variables[k].set(v)
+    
+    def __getitem__(self, k):
+        return self.variables[k].get()
+    
+    def __delitem__(self, k):
+        del self.variables[k]
+
+
 class VariableSource(Source):
-    def __init__(self, init: Image = None, label: str = ""):
+    def __init__(self, init: Image = None, controller: VariableSourceController = None):
         self.value = init
-        self.label = label
+        self.controller = controller
 
     def get(self):
         return self.value
